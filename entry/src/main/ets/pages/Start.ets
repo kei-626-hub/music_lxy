@@ -27,7 +27,7 @@ struct Start {
   build() {
     Stack({ alignContent: Alignment.TopEnd }) {
       Image($r('app.media.ad'))
-      Button('跳过')
+      Button('跳')
         .margin({ top: this.safeTop + 10, right: 10 })
         .backgroundColor('#4d000000')
         .onClick(() => {
