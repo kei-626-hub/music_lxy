@@ -1,4 +1,5 @@
-import { getSwiper } from '../apis';
+import { getDailyRecommend, getSwiper } from '../apis';
+import { DailyRecommendType } from '../models/Index';
 
 @Component
 export default struct Recommend {
@@ -31,8 +32,10 @@ export default struct Recommend {
   }
 
   @State swiperList: string[] = [];
+  @State dailyRecommend: DailyRecommendType[] = [];
   async aboutToAppear() {
     this.swiperList = await getSwiper() as string[];
+    this.dailyRecommend = await getDailyRecommend() as DailyRecommendType[];
   }
   @Builder
   swiperBuilder() {
@@ -49,11 +52,70 @@ export default struct Recommend {
     .autoPlay(true)
   }
 
+  @Builder
+  titleBuilder(title: string) {
+    Row() {
+      // 标题
+      Text(title)
+        .fontColor('#fff')
+        .fontWeight(700)
+      Image($r('app.media.ic_more'))
+        .width(22)
+        .fillColor('#fff')
+    }
+    .width('100%')
+    .padding(8)
+    .justifyContent(FlexAlign.SpaceBetween)
+  }
+
+  @Builder
+  dailyBuilder() {
+    this.titleBuilder('每日推荐')
+    Scroll() {
+      Row({ space: 10 }) {
+        ForEach(this.dailyRecommend, (item: DailyRecommendType) => {
+          Column() {
+            // 类型
+            Text(item.type)
+              .width('100%')
+              .backgroundColor(item.top)
+              .padding(8)
+              .fontColor('#fff')
+            // 封面图
+            Image(item.img)
+              .width('100%')
+              .aspectRatio(1)
+            // 标题
+            Text(item.title)
+              .width('100%')
+              .backgroundColor(item.bottom)
+              .padding(8)
+              .fontColor('#fff')
+              .fontSize(14)
+              .maxLines(2)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+              .lineHeight(18)
+          }
+          .width('40%')
+          .borderRadius(8)
+          .clip(true)
+        })
+      }
+    }
+    .width('100%')
+    .padding(8)
+    .scrollable(ScrollDirection.Horizontal)
+    .scrollBar(BarState.Off)
+    .edgeEffect(EdgeEffect.Spring)
+  }
+
+
   build() {
     Scroll() {
       Column() {
         this.searchBuilder()
         this.swiperBuilder()
+        this.dailyBuilder()
       }
       .constraintSize({ minHeight: '100%' })
     }

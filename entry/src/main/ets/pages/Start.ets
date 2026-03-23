@@ -35,4 +35,5 @@ struct Start {
           router.replaceUrl({ url: 'pages/Index' });
         })
     }
-  }  
+  }
+}

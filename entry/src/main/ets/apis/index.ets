@@ -17,3 +17,7 @@ export const getData = async (path: string) => {
 export const getSwiper = async () => {
   return await getData('/data/swiper');
 }
+export const getDailyRecommend = async () => {
+  return await getData('/data/dailyRecommend');
+};
+
