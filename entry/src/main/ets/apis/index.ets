@@ -20,4 +20,7 @@ export const getSwiper = async () => {
 export const getDailyRecommend = async () => {
   return await getData('/data/dailyRecommend');
 };
+export const getRecommendList = async () => {
+  return await getData('/data/recommendList');
+};
 

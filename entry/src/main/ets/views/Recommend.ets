@@ -1,5 +1,6 @@
-import { getDailyRecommend, getSwiper } from '../apis';
-import { DailyRecommendType } from '../models/Index';
+import { getDailyRecommend, getSwiper ,getRecommendList } from '../apis';
+import { DailyRecommendType, RecommendListType } from '../models/Index';
+
 
 @Component
 export default struct Recommend {
@@ -33,9 +34,11 @@ export default struct Recommend {
 
   @State swiperList: string[] = [];
   @State dailyRecommend: DailyRecommendType[] = [];
+  @State recommendList: RecommendListType[] = [];
   async aboutToAppear() {
     this.swiperList = await getSwiper() as string[];
     this.dailyRecommend = await getDailyRecommend() as DailyRecommendType[];
+    this.recommendList = await getRecommendList() as RecommendListType[];
   }
   @Builder
   swiperBuilder() {
@@ -109,6 +112,46 @@ export default struct Recommend {
     .edgeEffect(EdgeEffect.Spring)
   }
 
+  @Builder
+  songBuilder() {
+    this.titleBuilder('推荐歌单')
+    Scroll() {
+      Row({ space: 8 }) {
+        ForEach(this.recommendList, (item: RecommendListType) => {
+          Column({ space: 5 }) {
+            Stack({ alignContent: Alignment.TopStart }) {
+              // 封面图
+              Image(item.img)
+                .width('100%')
+                .borderRadius(8)
+              // 播放量
+              Text(item.count)
+                .margin(10)
+                .fontColor('#fff')
+                .fontWeight(800)
+                .fontSize(14)
+                .textShadow({ offsetX: 2, offsetY: 2, radius: 2, color: '#000' })
+            }
+            // 标题
+            Text(item.title)
+              .width('100%')
+              .padding(8)
+              .maxLines(2)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+              .fontColor('#fff')
+              .fontSize(14)
+              .lineHeight(18)
+          }
+          .width('30%')
+        })
+      }
+    }
+    .width('100%')
+    .padding(8)
+    .scrollable(ScrollDirection.Horizontal)
+    .scrollBar(BarState.Off)
+  }
+
 
   build() {
     Scroll() {
@@ -116,6 +159,7 @@ export default struct Recommend {
         this.searchBuilder()
         this.swiperBuilder()
         this.dailyBuilder()
+        this.songBuilder()
       }
       .constraintSize({ minHeight: '100%' })
     }

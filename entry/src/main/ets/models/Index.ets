@@ -10,3 +10,9 @@ export interface DailyRecommendType {
   top: string;	  // 类型背景色
   bottom: string;	// 标题背景色
 }
+export interface RecommendListType {
+  img: string;		// 封面图
+  title: string;	// 标题
+  count: string;	// 播放量
+}
+
