@@ -26,5 +26,8 @@ export const getRecommendList = async () => {
 export const getSongList = async () => {
   return await getData('/data/songList');
 };
+export const getMomentList = async () => {
+  return await getData('/data/momentList');
+};
 
 
