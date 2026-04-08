@@ -4,7 +4,9 @@ import { SongItemType, SongItem } from '../models/Index';
 @Component
 export default struct Mine {
   @State showList: [SongItemType[]] = [[]];
-  columnList: number[] = [0, 1, 2, 3];
+  columnList: number[] = [0, 1, 2, 3];   //定义网格布局的列索引
+
+  //页面即将显示时的生命周期回调
   async aboutToAppear() {
     const songList: SongItemType[] = await getSongList() as SongItemType[];
     this.columnList.forEach(item => {

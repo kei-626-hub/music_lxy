@@ -5,6 +5,8 @@ import { SongItemType } from '../models/Index';
 
 @Component
 export default struct Find {
+  @State songs: SongItemType[] = [];
+  router = this.getUIContext().getRouter();
   build() {
     Column() {
       Text('猜你喜欢')
@@ -45,6 +47,9 @@ export default struct Find {
             }
             .width('100%')
             .margin({ bottom: 10 })
+            .onClick(() => {
+              this.router.pushUrl({ url: 'pages/Play' }); //这里用的pushUrl
+            })
           }
         })
       }
@@ -57,8 +62,8 @@ export default struct Find {
     .padding(8)
   }
 
-  @State songs: SongItemType[] = [];
   async aboutToAppear() {
     this.songs = await getSongList() as SongItemType[];
   }
+
 }
