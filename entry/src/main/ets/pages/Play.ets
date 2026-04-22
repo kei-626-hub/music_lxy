@@ -57,25 +57,6 @@ struct Play {
     };
   }
 
-  // // 删除按钮侧滑效果
-  // @Builder
-  // deleteButton(index: number) {
-  //   Row() {
-  //     Image($r('app.media.ic_delete'))
-  //       .fillColor(Color.White)
-  //       .width(20)
-  //   }
-  //   .width(60)
-  //   .height('100%')
-  //   .backgroundColor(Color.Red)
-  //   .justifyContent(FlexAlign.Center)
-  //   .onClick(() => {
-  //     // 删除逻辑
-  //     this.playState.playList.splice(index, 1);
-  //   })
-  // }
-
-
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
       // 播放区域
@@ -237,9 +218,9 @@ struct Play {
                 Image($r('app.media.ic_prev'))
                   .fillColor(Color.White)
                   .width(30)
-                  // .onClick(() => {
-                  //   AVPlayerManager.prevPlay();
-                  // })
+                  .onClick(() => {
+                    AVPlayerManager.prevPlay();
+                  })
                 // “播放/暂停”按钮
                 Image(this.playState.isPlay ? $r('app.media.ic_paused') : $r('app.media.ic_play'))
                   .fillColor(Color.White)
@@ -255,9 +236,9 @@ struct Play {
                 Image($r('app.media.ic_next'))
                   .fillColor(Color.White)
                   .width(30)
-                  // .onClick(() => {
-                  //   AVPlayerManager.nextPlay();
-                  // })
+                  .onClick(() => {
+                    AVPlayerManager.nextPlay();
+                  })
                 // “播放列表”按钮
                 Image($r('app.media.ic_song_list'))
                   .fillColor(Color.White)
