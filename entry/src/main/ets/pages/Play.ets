@@ -1,10 +1,43 @@
+import { SONG_KEY } from '../contants';
 import { SongItem, PlayState } from '../models/Index';
+import AVPlayerManager from '../utils/AVPlayerManager';
+
 @Entry
 @Component
 struct Play {
   @State panelHeight: string = '0%';
-  @State playState: PlayState = new PlayState();
+  // @State playState: PlayState = new PlayState();
+  playState: PlayState = new PlayState();
   @State rotateAngle: number = 0;
+
+  // @StorageLink(SONG_KEY) // changed from @State
+  // @Watch('changeAnimate')
+  // playState: PlayState = new PlayState();
+  //
+  // changeAnimate() {
+  //   if (this.playState.isPlay) {
+  //     this.animatorResult.play();
+  //   } else {
+  //     this.animatorResult.pause();
+  //   }
+  // }
+  //
+  // number2time(number: number) {
+  //   // 判断是否大于1分钟
+  //   if (number >= 60 * 1000) {
+  //     const s = Math.ceil(number / 1000 % 60);
+  //     const m = Math.floor(number / 1000 / 60);
+  //     const second = s.toString().padStart(2, '0');
+  //     const minute = m.toString().padStart(2, '0');
+  //     return minute + ':' + second;
+  //   } else {
+  //     const s = Math.ceil(number / 1000 % 60);
+  //     const second = s.toString().padStart(2, '0');
+  //     return '00:' + second;
+  //   }
+  // }
+
+
   //定义动画对象，主要用于实现唱片的旋转效果
   animatorResult = this.getUIContext().createAnimator({
     duration: 1000 * 15,
@@ -24,23 +57,24 @@ struct Play {
     };
   }
 
-  // 删除按钮侧滑效果
-  @Builder
-  deleteButton(index: number) {
-    Row() {
-      Image($r('app.media.ic_delete'))
-        .fillColor(Color.White)
-        .width(20)
-    }
-    .width(60)
-    .height('100%')
-    .backgroundColor(Color.Red)
-    .justifyContent(FlexAlign.Center)
-    .onClick(() => {
-      // 删除逻辑
-      this.playState.playList.splice(index, 1);
-    })
-  }
+  // // 删除按钮侧滑效果
+  // @Builder
+  // deleteButton(index: number) {
+  //   Row() {
+  //     Image($r('app.media.ic_delete'))
+  //       .fillColor(Color.White)
+  //       .width(20)
+  //   }
+  //   .width(60)
+  //   .height('100%')
+  //   .backgroundColor(Color.Red)
+  //   .justifyContent(FlexAlign.Center)
+  //   .onClick(() => {
+  //     // 删除逻辑
+  //     this.playState.playList.splice(index, 1);
+  //   })
+  // }
+
 
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
@@ -195,27 +229,27 @@ struct Play {
                 Image($r('app.media.ic_prev'))
                   .fillColor(Color.White)
                   .width(30)
-                  .onClick(() => {
-                    AVPlayerManager.prevPlay();
-                  })
+                  // .onClick(() => {
+                  //   AVPlayerManager.prevPlay();
+                  // })
                 // “播放/暂停”按钮
                 Image(this.playState.isPlay ? $r('app.media.ic_paused') : $r('app.media.ic_play'))
                   .fillColor(Color.White)
                   .width(50)
-                  .onClick(() => {
-                    if (this.playState.isPlay) {
-                      AVPlayerManager.pause();
-                    } else {
-                      AVPlayerManager.singPlay(this.playState.playList[this.playState.playIndex]);
-                    }
-                  })
+                  // .onClick(() => {
+                  //   if (this.playState.isPlay) {
+                  //     AVPlayerManager.pause();
+                  //   } else {
+                  //     AVPlayerManager.singPlay(this.playState.playList[this.playState.playIndex]);
+                  //   }
+                  // })
                 // “下一首”按钮
                 Image($r('app.media.ic_next'))
                   .fillColor(Color.White)
                   .width(30)
-                  .onClick(() => {
-                    AVPlayerManager.nextPlay();
-                  })
+                  // .onClick(() => {
+                  //   AVPlayerManager.nextPlay();
+                  // })
                 // “播放列表”按钮
                 Image($r('app.media.ic_song_list'))
                   .fillColor(Color.White)
@@ -317,7 +351,7 @@ struct Play {
                 .alignItems(VerticalAlign.Center)
               }
               .border({ width: { bottom: 1 }, color: '#12ec5c87' })
-              .swipeAction({  end: this.deleteButton(index) })
+              // .swipeAction({  end: this.deleteButton(index) })
             })
           }
           .layoutWeight(1)

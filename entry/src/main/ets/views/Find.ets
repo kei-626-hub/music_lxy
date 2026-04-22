@@ -1,5 +1,6 @@
 import { getSongList } from '../apis';
 import { SongItemType } from '../models/Index';
+import AVPlayerManager from '../utils/AVPlayerManager';
 
 
 
@@ -48,6 +49,8 @@ export default struct Find {
             .width('100%')
             .margin({ bottom: 10 })
             .onClick(() => {
+              // 播放当前点击的歌曲
+              AVPlayerManager.singPlay(item);
               this.router.pushUrl({ url: 'pages/Play' }); //这里用的pushUrl
             })
           }
