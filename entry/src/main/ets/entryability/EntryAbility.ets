@@ -1,4 +1,5 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
+import AVPlayerManager from '../utils/AVPlayerManager';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 
@@ -52,6 +53,9 @@ export default class EntryAbility extends UIAbility {
       const safeBottom = mainWindow.getUIContext().px2vp(navigationArea.bottomRect.height);
       // 存储底部避让区高度
       AppStorage.setOrCreate(SAFE_BOTTOM, safeBottom)});
+      // 初始化播放器
+      AVPlayerManager.init();
+
 
     }
 
