@@ -14,6 +14,24 @@ struct Play {
   @Watch('changeAnimate')
   playState: PlayState = new PlayState();
 
+  router = this.getUIContext().getRouter();
+
+  @Builder
+  deleteButton(index: number) {
+    Button('删除')
+      .backgroundColor('#ec5c87')
+      .fontColor('#fff')
+      .width(80)
+      .height('100%')
+      .type(ButtonType.Normal)
+      .onClick(() => {
+        if (AVPlayerManager.currentSong.playList.length <= 1) {
+          this.router.back();
+        }
+        AVPlayerManager.remove(index);
+      })
+  }
+
   changeAnimate() {
     if (this.playState.isPlay) {
       this.animatorResult.play();
@@ -56,6 +74,7 @@ struct Play {
       this.rotateAngle = val;
     };
   }
+
 
   build() {
     Stack({ alignContent: Alignment.Bottom }) {
@@ -326,6 +345,10 @@ struct Play {
                     .layoutWeight(1)
                     .alignItems(HorizontalAlign.Start)
                     .justifyContent(FlexAlign.Center)
+                    .onClick(() => {
+                      AVPlayerManager.singPlay(this.playState.playList[index]);
+                    })
+
                   }
                   .layoutWeight(1)
                   .onClick(() => {
@@ -340,7 +363,7 @@ struct Play {
                 .alignItems(VerticalAlign.Center)
               }
               .border({ width: { bottom: 1 }, color: '#12ec5c87' })
-              // .swipeAction({  end: this.deleteButton(index) })
+              .swipeAction({  end: this.deleteButton(index) })
             })
           }
           .layoutWeight(1)
